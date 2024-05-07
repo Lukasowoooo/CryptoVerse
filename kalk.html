@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+    </style>
+  <title>Kursy kryptowalut</title>
+</head>
+<body>
+    <header>
+        <h1><a href="index.html">CryptoVerse</a></h1>
+      </header>
+      <section>
+        
+        <h2>Kalkulator kryptowalut</h2>
+        <form>
+            <label for="crypto-select">Wybierz kryptowalutę:</label>
+            <select id="crypto-select">
+                <option value="btc">Bitcoin (BTC)</option>
+                <option value="doge">Dogecoin (DOGE)</option>
+                <option value="ltc">Litecoin (LTC)</option>
+            </select>
+            <label for="crypto-amount">Wprowadź ilość:</label>
+            <input type="number" id="crypto-amount" value="1"><br>
+            <button id="convert-btn">Przelicz na PLN</button>
+            <br>
+            <br>
+            <label for="pln-amount">Wprowadź ilość PLN:</label>
+            <input type="number" id="pln-amount" value="1"><br>
+            <button id="convert-back-btn">Przelicz na kryptowalutę</button>
+            <p id="result"></p>
+        </form>
+      </section>
+
+      <section>
+        <h2>Nasze stronki</h2>
+        <div class="gallery">
+          <div class="gallery-item1"><a href="krypt-inf.html">Kryptowaluty. Czym są i z czym to się je?</a></div>
+          <div class="gallery-item1"><a href="">Nasze poradniki.</a></div>
+          <div class="gallery-item1"><a href="forum.html">Forum</a></div>
+          <div class="gallery-item1"><a href="kalk.html">Kalkulator Krypto</a></div>
+          <div class="gallery-item1"><a href="">O nas / Kontakt</a></div>
+        </div>
+      </section>
+
+      <footer>
+        <div><p>&copy;CryptoVerse - Łukasz Wąsowski | 2024</p></div>
+      </footer>
+      <script>
+            const exchangeRates = {
+                btc: {
+                    usd: 64034.96,
+                    pln: 64034.96 * 4.23
+                },
+                doge: {
+                    usd: 0.13,
+                    pln: 0.13 * 4.23
+                },
+                ltc: {
+                    usd: 242.6,
+                    pln: 242.6 * 4.23
+                }
+            };
+
+            const cryptoSelect = document.getElementById('crypto-select');
+            const cryptoAmountInput = document.getElementById('crypto-amount');
+            const convertBtn = document.getElementById('convert-btn');
+            const plnAmountInput = document.getElementById('pln-amount');
+            const convertBackBtn = document.getElementById('convert-back-btn');
+            const resultElement = document.getElementById('result');
+
+            cryptoSelect.addEventListener('change', () => {
+                const selectedCrypto = cryptoSelect.value;
+                cryptoAmountInput.placeholder = `Wprowadź ilość ${selectedCrypto}`;
+            });
+
+            convertBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const selectedCrypto = cryptoSelect.value;
+                const cryptoAmount = parseFloat(cryptoAmountInput.value);
+                const usdAmount = cryptoAmount * exchangeRates[selectedCrypto].usd;
+                const plnAmount = usdAmount * exchangeRates[selectedCrypto].pln;
+                resultElement.textContent = `${cryptoAmount} ${selectedCrypto} to równowartość ${plnAmount.toFixed(2)} PLN`;
+            });
+
+            convertBackBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const selectedCrypto = cryptoSelect.value;
+                const plnAmount = parseFloat(plnAmountInput.value);
+                const usdAmount = plnAmount / exchangeRates[selectedCrypto].pln;
+                const cryptoAmount = usdAmount / exchangeRates[selectedCrypto].usd;
+                resultElement.textContent = `${plnAmount} PLN to równowartość ${cryptoAmount.toFixed(8)} ${selectedCrypto}`;
+            });
+      </script>
+      
+</body>
+</html>
