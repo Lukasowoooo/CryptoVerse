@@ -291,7 +291,7 @@ button[type="button"]:hover {
  /*----------------------------Style-----------------------------*/
 
 .onas-div{
-  background-image: url(./res/background-onas.jpg);
+  background-image: url('./res/background-onas.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 10px;
